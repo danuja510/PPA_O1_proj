@@ -11,10 +11,10 @@ class Product(models.Model):
     price = models.FloatField()
     stock = models.IntegerField()
     image = models.ImageField(default ='default.jpg', upload_to='profile_pics')
-    #manufacturer = models.ForeignKey(Manufacturer, on_delete= models.CASCADE)
+    manufacturer = models.CharField(max_length=100)
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('product-detail', kwargs={'pk': self.pk})
+        return reverse('product-details', kwargs={'pk': self.pk})
