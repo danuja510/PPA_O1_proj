@@ -1,1 +1,17 @@
-<h1>Nice Job</h1>
+{% extends "products/base-template.html" %}
+{% load static %}
+{% block content %}
+  {% for product in products %}
+    <a href="#" class="product-a">
+      <div class="product col span-1-of-5">
+        <div class="product-img">
+          <img src="{% static 'products/gun.jpg' %}" alt="">
+        </div>
+        <div class="product-details">
+          <p>{{ product.title }}</p>
+          <p>${{product.price}}</p>
+        </div>
+      </div>
+    </a>
+  {% endfor %}
+{% endblock %}
