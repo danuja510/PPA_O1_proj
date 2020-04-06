@@ -10,7 +10,7 @@ class Product(models.Model):
     date_posted = models.DateTimeField(default= timezone.now)
     price = models.FloatField()
     stock = models.IntegerField()
-    image = models.ImageField(default ='default.jpg', upload_to='profile_pics')
+    image = models.ImageField(default ='default.jpg', upload_to='product_pics')
     manufacturer = models.CharField(max_length=100)
 
     def __str__(self):

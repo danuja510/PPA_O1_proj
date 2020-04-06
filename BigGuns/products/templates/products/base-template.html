@@ -4,8 +4,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="{% static 'products/grid.css' %}">
     <link rel="stylesheet" href="{% static 'products/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'products/grid.css' %}">
     <link rel="stylesheet" href="{% static 'products/ionicons.min.css' %}">
     <link rel="stylesheet" href="{% static 'products/main.css' %}">
     <title></title>
@@ -13,12 +13,14 @@
   <body>
     <header>
       <div class="row">
-        <h1>big guns</h1>
-      </div>
-      <div class="row nav">
-        <div class="left">
+        <div class="left 1">
+          <h1>big guns</h1>
+        </div>
+        <div class="left 2">
           <a href="{% url 'store-home' %}">Home</a>
         </div>
+          
+        
         <div class="right">
           <a href="#">Login</a>
           <a href="#">Register</a>
@@ -30,6 +32,13 @@
 
       </div>
       <div class="col span-6-of-7">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+              {{ message}}
+            </div>
+          {% endfor %}
+        {% endif %}
         {% block content %}{% endblock %}
       </div>
     </main>

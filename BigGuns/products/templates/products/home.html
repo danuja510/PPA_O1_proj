@@ -2,10 +2,10 @@
 {% load static %}
 {% block content %}
   {% for product in products %}
-    <a href="#" class="product-a">
+    <a href="{% url 'product-details' product.id %}" class="product-a">
       <div class="product col span-1-of-5">
         <div class="product-img">
-          <img src="{{product.image}}" alt="">
+          <img src="{{product.image.url}}" alt="">
         </div>
         <div class="product-details">
           <p>{{ product.title }}</p>

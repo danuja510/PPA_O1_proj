@@ -1,0 +1,18 @@
+{% extends "products/base-template.html" %}
+{% load static %}
+{% block content %}
+    <div class="product-details col span-1-of-2">
+        <div class="product-img">
+            <img src="{{object.image.url}}" alt="">
+        </div>
+    </div>
+    <div class="product-details2 col span-1-of-2">
+        <div class="product-details">
+            <p>{{ object.title }}</p>
+            <p>${{object.price}}</p>
+            <p>{{object.stock}}</p>
+            <p>{{object.manufacturer}}</p>
+            <p>{{object.description}}</p>
+        </div>
+    </div>
+{% endblock %}
