@@ -10,10 +10,15 @@ class Cart(models.Model):
     item = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     created = models.DateTimeField(auto_now_add=True)
-
+    purchased = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.quantity} of {self.item.title}'
+
+    def get_total(self):
+        total = self.item.price * self.quantity
+        floattotal = float("{0:.2f}".format(total))
+        return floattotal
 
 #Order Model
 class Order(models.Model):
@@ -24,3 +29,10 @@ class Order(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    def get_totals(self):
+        total = 0
+        for order_item in self.orderitems.all():
+            total += order_item.get_total()
+        
+        return total

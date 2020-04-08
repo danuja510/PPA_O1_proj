@@ -64,3 +64,55 @@ def remove_from_cart(request, id):
         messages.info(request, "You do not have an active order")
         return redirect("store-home")
 
+# Cart View
+def CartView(request):
+
+    user = request.user
+
+    carts = Cart.objects.filter(user=user, purchased=False)
+    orders = Order.objects.filter(user=user, ordered=False)
+
+    if carts.exists():
+        if orders.exists():
+            order = orders[0]
+            return render(request, 'cart/cart.html', {"carts": carts, 'order': order})
+        else:
+            messages.warning(request, "You do not have any item in your Cart")
+            return redirect("store-home")
+		
+    else:
+        messages.warning(request, "You do not have any item in your Cart")
+        return redirect("store-home")
+
+
+# Decrease the quantity of the cart :
+
+def decreaseCart(request, id):
+    item = get_object_or_404(Product, id= id)
+    order_qs = Order.objects.filter(
+        user=request.user,
+        ordered=False
+    )
+    if order_qs.exists():
+        order = order_qs[0]
+        # check if the order item is in the order
+        if order.orderitems.filter(item__id=item.id).exists():
+            order_item = Cart.objects.filter(
+                item=item,
+                user=request.user
+            )[0]
+            if order_item.quantity > 1:
+                order_item.quantity -= 1
+                order_item.save()
+            else:
+                order.orderitems.remove(order_item)
+                order_item.delete()
+                messages.warning(request, f"{item.title} has removed from your cart.")
+            messages.info(request, f"{item.title} quantity has updated.")
+            return redirect("view-cart")
+        else:
+            messages.info(request, f"{item.title} quantity has updated.")
+            return redirect("view-cart")
+    else:
+        messages.info(request, "You do not have an active order")
+        return redirect("view-cart")
