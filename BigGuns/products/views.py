@@ -5,7 +5,7 @@ from .models import Product
 class ProductsListView(ListView):
     model = Product
     template_name = 'products/home.html'
-    context_object_name = 'posts'
+    context_object_name = 'products'
 
 def home(request):
     context = {

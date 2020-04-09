@@ -40,3 +40,10 @@ class Order(models.Model):
             total += order_item.get_total()
         
         return total
+
+    def get_totals_purchased(self):
+        total = 0
+        for order_item in self.orderitems.filter(purchased=True).all():
+            total += order_item.get_total()
+        
+        return total

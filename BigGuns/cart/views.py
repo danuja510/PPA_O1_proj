@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from products.models import Product
 from django.contrib import messages
 from .models import Cart, Order
+from django.views.generic import ListView,DetailView
 
 def add_to_cart(request, id):
     item = get_object_or_404(Product, id=id)
@@ -132,3 +133,13 @@ def checkout(request):
             cart.save()
         messages.info(request, "Thanks for shopping with us")
         return redirect("store-home")
+
+def orders(request):
+    context = {
+        'orders': Order.objects.filter(user=request.user, ordered=True).all()
+    }
+    return render(request, 'cart/orders.html', context)
+
+class OrderDetailView(DetailView):
+    template_name = 'cart/view-order.html'
+    model = Order
