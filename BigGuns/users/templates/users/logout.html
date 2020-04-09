@@ -1,0 +1,8 @@
+{% extends "products/base-template.html" %}
+{% load crispy_forms_tags }
+{% block content %}
+    <h2>You Have Been Logged Out</h2>
+    <div>
+        <small>Already Have An Account? <a href="{% url 'login' %}">Sign In</a></small>
+    </div>
+{% endblock content %}

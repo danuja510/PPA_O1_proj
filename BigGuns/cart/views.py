@@ -7,7 +7,8 @@ def add_to_cart(request, id):
     item = get_object_or_404(Product, id=id)
     order_item, created = Cart.objects.get_or_create(
         item=item,
-        user=request.user
+        user=request.user,
+        purchased=False
     )
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
@@ -17,17 +18,17 @@ def add_to_cart(request, id):
             order_item.quantity += 1
             order_item.save()
             messages.info(request, "This item quantity was updated.")
-            return redirect("store-home")
+            return redirect("view-cart")
         else:
             order.orderitems.add(order_item)
             messages.info(request, "This item was added to your cart.")
-            return redirect("store-home")
+            return redirect("view-cart")
     else:
         order = Order.objects.create(
             user=request.user)
         order.orderitems.add(order_item)
         messages.info(request, "This item was added to your cart.")
-        return redirect("store-home")
+        return redirect("view-cart")
 
 # Remove item from cart
 
@@ -116,3 +117,18 @@ def decreaseCart(request, id):
     else:
         messages.info(request, "You do not have an active order")
         return redirect("view-cart")
+
+def checkout(request):
+    order_qs = Order.objects.filter(
+        user=request.user,
+        ordered=False
+    )
+    if order_qs.exists():
+        order = order_qs[0]
+        order.ordered= True
+        order.save()
+        for cart in order.orderitems.all():
+            cart.purchased = True
+            cart.save()
+        messages.info(request, "Thanks for shopping with us")
+        return redirect("store-home")
