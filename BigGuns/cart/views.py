@@ -139,10 +139,11 @@ def checkout(request):
             order.ordered_date= datetime.datetime.now()
             order.save()
             messages.success(request, f'Order Placed')
-            return redirect('orders')
+            return redirect('order-details', order.id)
     else:
         form = CheckoutForm(instance= Order.objects.filter( user=request.user, ordered=False )[0])
-    context = {'form': form}
+    order= Order.objects.filter( user=request.user, ordered=False )[0]
+    context = {'form': form, 'order':order}
     return render(request, 'cart/checkout.html', context)
 
 @login_required

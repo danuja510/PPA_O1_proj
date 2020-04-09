@@ -1,11 +1,11 @@
 {% extends 'products/base-template.html' %}
 
 {% block content %}
-<p>{{object.id}}</p>
-<p>{{object.created}}</p>
-<p>${{ object.get_totals_purchased| floatformat:2 }}</p>
-{% for order in object.orderitems.all %}
-    <p>{{order.item.title}}     x{{order.quantity}}     {{order.get_total}}</p>
+<p>{{order.id}}</p>
+<p>{{order.created}}</p>
+<p>${{ order.get_totals| floatformat:2 }}</p>
+{% for item in order.orderitems.all %}
+    <p>{{item.item.title}}     x{{item.quantity}}     {{item.get_total}}</p>
 {% endfor %}
 <form method="POST">
     {% csrf_token %}
