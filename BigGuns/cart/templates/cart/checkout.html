@@ -2,9 +2,19 @@
 
 {% block content %}
 <p>{{object.id}}</p>
-<p>{{object.ordered_date}}</p>
+<p>{{object.created}}</p>
 <p>${{ object.get_totals_purchased| floatformat:2 }}</p>
 {% for order in object.orderitems.all %}
     <p>{{order.item.title}}     x{{order.quantity}}     {{order.get_total}}</p>
 {% endfor %}
+<form method="POST">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Billing Details</legend>
+        {{ form }}
+    </fieldset>
+    <div>
+        <button type="submit">Confirm</button>
+    </div>
+</form>
 {% endblock %}

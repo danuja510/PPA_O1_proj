@@ -3,6 +3,6 @@
 {% block content %}
 {% for order in orders %}
     
-    <a href="{% url 'order-details' order.id %}">{{order.id}},    {{order.created}},  ${{ order.get_totals_purchased| floatformat:2 }}</a><br>
+    <a href="{% url 'order-details' order.id %}">{{order.id}},    {{order.ordered_date}},  ${{ order.get_totals_purchased| floatformat:2 }}</a><br>
     {% endfor %}
 {% endblock %}

@@ -2,8 +2,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from products.models import Product
 from django.contrib import messages
 from .models import Cart, Order
-from django.views.generic import ListView,DetailView
+from django.views.generic import ListView,DetailView, UpdateView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import CheckoutForm
+import datetime
 
+@login_required
 def add_to_cart(request, id):
     item = get_object_or_404(Product, id=id)
     order_item, created = Cart.objects.get_or_create(
@@ -32,7 +37,7 @@ def add_to_cart(request, id):
         return redirect("view-cart")
 
 # Remove item from cart
-
+@login_required
 def remove_from_cart(request, id):
     item = get_object_or_404(Product, id=id)
     cart_qs = Cart.objects.filter(user=request.user, item=item)
@@ -67,6 +72,7 @@ def remove_from_cart(request, id):
         return redirect("store-home")
 
 # Cart View
+@login_required
 def CartView(request):
 
     user = request.user
@@ -88,7 +94,7 @@ def CartView(request):
 
 
 # Decrease the quantity of the cart :
-
+@login_required
 def decreaseCart(request, id):
     item = get_object_or_404(Product, id= id)
     order_qs = Order.objects.filter(
@@ -119,27 +125,33 @@ def decreaseCart(request, id):
         messages.info(request, "You do not have an active order")
         return redirect("view-cart")
 
+@login_required
 def checkout(request):
-    order_qs = Order.objects.filter(
-        user=request.user,
-        ordered=False
-    )
-    if order_qs.exists():
-        order = order_qs[0]
-        order.ordered= True
-        order.save()
-        for cart in order.orderitems.all():
-            cart.purchased = True
-            cart.save()
-        messages.info(request, "Thanks for shopping with us")
-        return redirect("store-home")
+    if request.method == 'POST':
+        form = CheckoutForm(request.POST, instance = Order.objects.filter( user=request.user, ordered=False )[0])
+        if form.is_valid():
+            form.save()
+            order= Order.objects.filter( user=request.user, ordered=False )[0]
+            for cart in order.orderitems.all():
+                cart.purchased = True
+                cart.save()
+            order.ordered= True
+            order.ordered_date= datetime.datetime.now()
+            order.save()
+            messages.success(request, f'Order Placed')
+            return redirect('orders')
+    else:
+        form = CheckoutForm(instance= Order.objects.filter( user=request.user, ordered=False )[0])
+    context = {'form': form}
+    return render(request, 'cart/checkout.html', context)
 
+@login_required
 def orders(request):
     context = {
         'orders': Order.objects.filter(user=request.user, ordered=True).all()
     }
     return render(request, 'cart/orders.html', context)
 
-class OrderDetailView(DetailView):
+class OrderDetailView(LoginRequiredMixin, DetailView):
     template_name = 'cart/view-order.html'
     model = Order
