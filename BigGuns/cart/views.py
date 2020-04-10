@@ -135,6 +135,8 @@ def checkout(request):
             for cart in order.orderitems.all():
                 cart.purchased = True
                 cart.save()
+                cart.item.stock -= 1
+                cart.item.save()
             order.ordered= True
             order.ordered_date= datetime.datetime.now()
             order.save()
