@@ -1,8 +1,12 @@
 {% extends 'products/base-template.html' %}
 
 {% block content %}
+<h2>Your Orders</h2><br>
 {% for order in orders %}
-    
-    <a href="{% url 'order-details' order.id %}">{{order.id}},    {{order.ordered_date}},  ${{ order.get_totals_purchased| floatformat:2 }}</a><br>
+    <a href="{% url 'order-details' order.id %}" style="text-decoration: none; color: #333;">
+        <article class="media content-section">
+           <p>Order No. <strong>{{order.id}}</strong> <br>Order Date/Time <strong>{{order.ordered_date}}</strong><br>Order Total <strong>${{ order.get_totals_purchased| floatformat:2 }}</strong><br><span class="text-muted">click to view details</span></p>
+        </article>
+    </a>
     {% endfor %}
 {% endblock %}

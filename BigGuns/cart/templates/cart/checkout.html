@@ -1,20 +1,29 @@
 {% extends 'products/base-template.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
-<p>{{order.id}}</p>
-<p>{{order.created}}</p>
-<p>${{ order.get_totals| floatformat:2 }}</p>
-{% for item in order.orderitems.all %}
-    <p>{{item.item.title}}     x{{item.quantity}}     {{item.get_total}}</p>
-{% endfor %}
+<article class="media content-section">
+    <table>
+        <thead>
+            <th>Product Name &nbsp;&nbsp;</th><th>Quantity &nbsp;&nbsp;</th><th>Unit Price &nbsp;&nbsp;</th><th>Price &nbsp;&nbsp;</th>
+        </thead>
+        {% for item in order.orderitems.all %}
+            <tr>
+                <td>{{item.item.title}} &nbsp;&nbsp; </td><td>{{item.quantity}} &nbsp;&nbsp;</td><td>{{item.item.price}} &nbsp;&nbsp;</td><td>{{item.get_total}} &nbsp;&nbsp;</td>
+            </tr>
+        {% endfor %}
+    </table>
+</article>
+<article class="media content-section">
+    <p>Total Price <strong>${{ order.get_totals| floatformat:2 }}</strong></p>
+</article>
 <form method="POST">
     {% csrf_token %}
     <fieldset>
         <legend>Billing Details</legend>
-        {{ form }}
+        {{ form|crispy }}
     </fieldset>
     <div>
-        <button type="submit">Confirm</button>
+        <button type="submit" class="btn btn-success mr-4">Confirm</button>
     </div>
 </form>
 {% endblock %}

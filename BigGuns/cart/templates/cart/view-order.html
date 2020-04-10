@@ -1,10 +1,25 @@
 {% extends 'products/base-template.html' %}
 
 {% block content %}
-<p>{{object.id}}</p>
-<p>{{object.ordered_date}}</p>
-<p>${{ object.get_totals_purchased| floatformat:2 }}</p>
-{% for order in object.orderitems.all %}
-    <p>{{order.item.title}}     x{{order.quantity}}     {{order.get_total}}</p>
-{% endfor %}
+<article class="media content-section">
+    <h2>Order No. <strong>{{object.id}}</strong></h2>
+</article>
+<article class="media content-section">
+    <table>
+        <thead>
+            <th>Product Name &nbsp;&nbsp;</th><th>Quantity &nbsp;&nbsp;</th><th>Unit Price &nbsp;&nbsp;</th><th>Price &nbsp;&nbsp;</th>
+        </thead>
+        {% for order in object.orderitems.all %}
+            <tr>
+                <td>{{order.item.title}} &nbsp;&nbsp; </td><td>{{order.quantity}} &nbsp;&nbsp;</td><td>{{order.item.price}} &nbsp;&nbsp;</td><td>{{order.get_total}} &nbsp;&nbsp;</td>
+            </tr>
+        {% endfor %}
+    </table>
+</article>
+<article class="media content-section">
+    <p>Ordered Date/Time <strong>{{object.ordered_date}}</strong></p>
+</article>
+<article class="media content-section">
+    <p>Total Price <strong>${{ order.get_totals_purchased| floatformat:2 }}</strong></p>
+</article>
 {% endblock %}
