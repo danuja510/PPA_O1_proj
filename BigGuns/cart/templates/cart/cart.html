@@ -20,9 +20,9 @@
       <th scope="row">{{ forloop.counter }}</th>
       <td>{{ cart.item.title }}</td>
       <td>
-        <a class="mr-2" href="decrease/{{cart.item.id}}"><span class="badge badge-light"><i class="fas fa-minus"></i></span></a>
+        <a class="mr-2" href="decrease/{{cart.item.id}}"><span class="badge badge-light"><strong>-</strong></span></a>
       {{ cart.quantity }}
-      <a class="ml-2" href="add/{{cart.item.id}}" ><span class="badge badge-light"><i class="fas fa-plus"></i></span></a>
+      <a class="ml-2" href="add/{{cart.item.id}}" ><span class="badge badge-light"><strong>+</strong></span></a>
       </td>
       <td>${{ cart.get_total }}</td>
     </tr>

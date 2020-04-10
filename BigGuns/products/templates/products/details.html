@@ -14,7 +14,11 @@
             <p><strong>Manufacturer :</strong>   {{ object.manufacturer}}</p>
             <div>
                 <div>
-                    <a class="btn btn-success mt-1 mb-1" href="">Add to Cart</a>
+                    {% if product.stock > 0 %}
+                        <a href="{% url 'add-cart' object.id %}" class="btn btn-success mt-1 mb-1">Add to Cart</a>
+                    {% else %}
+                        <span style="color: red;">Sorry Out of Stock</span>
+                    {% endif %}
                 </div>
             </div>
         </div>

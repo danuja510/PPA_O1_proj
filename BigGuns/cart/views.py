@@ -127,6 +127,11 @@ def decreaseCart(request, id):
 
 @login_required
 def checkout(request):
+    for cart in Order.objects.filter( user=request.user, ordered=False )[0].orderitems.all():
+        if cart.item.stock< cart.quantity:
+            messages.warning(request, f'Order amount exceeds available quantity in product {cart.item.title}')
+            return redirect("view-cart")
+
     if request.method == 'POST':
         form = CheckoutForm(request.POST, instance = Order.objects.filter( user=request.user, ordered=False )[0])
         if form.is_valid():
