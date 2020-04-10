@@ -1,86 +1,41 @@
-* {
+
+body {
+  background: #fafafa;
+  color: #333333;
+  margin-top: 5rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #444444;
+}
+
+ul {
   margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
 }
 
-html  {
-    background-color: #fff;
-    color: #555;
-    font-family: 'Lato', 'Arial',sans-serif;
-    font-size: 20px;
-    font-weight: 300;
-    text-rendering: optimizeLegibility;
+.bg-steel {
+  background-color: #5f788a;
 }
 
-.row{
-    max-width: 1280px;
-    margin: 0 auto;
+.site-header .navbar-nav .nav-link {
+  color: #cbd5db;
 }
 
-h1,
-h2,
-h3  {
-    font-weight: 300;
-    text-transform: uppercase;
+.site-header .navbar-nav .nav-link:hover {
+  color: #ffffff;
 }
 
-h3  {
-    font-size: 110%;
-    text-align: center;
-    margin-bottom: 15px;
+.site-header .navbar-nav .nav-link.active {
+  font-weight: 500;
 }
 
-h2  {
-    letter-spacing: 1px;
-    font-size: 150%;
-    word-spacing: 2px;
-    text-align: center;
-    margin-bottom: 30px
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
 }
-
-h1  {
-    font-weight: 400;
-    letter-spacing: 1px;
-    font-size: 180%;
-    word-spacing: 4px;
-    text-align: center;
-    display: inline;
-}
-
-/*---------------Header---------------------*/
-
-.left{
-  float:left;
-}
-
-.left a{
-  margin-left: 10px;
-}
-
-.middle{
-  display: inline-block;
-  margin: 0 auto;
-}
-
-.right{
-  float: right;
-}
-
-.right a{
-  margin-right: 5px
-}
-header a:link, .header a:visited{
-  text-decoration: none;
-  color: #555
-}
-
-header{
-  height: 65px;
-  background-color: #f0f0f0
-}
-
 /*-----------------Footer-------------------------*/
 
 footer{
@@ -99,32 +54,4 @@ footer p{
 
 
 /*------------------------Main---------------------------*/
-.product{
-  margin: 20px;
-  box-shadow: 0 2px 2px #efefef
-}
 
-.product-img img{
-  width: 100%;
-  height: auto;
-  margin: auto 0;
-}
-
-.product-img{
-  height: 170px;
-}
-
-.product-details{
-  border-top: 1px solid #e0e0e0;
-  margin-bottom: 20px;
-}
-
-.product-details p{
-  margin-top: 5px;
-  text-align: center;
-}
-
-.product-a:link,.product-a:visited{
-  text-decoration: none;
-  color: #555;
-}

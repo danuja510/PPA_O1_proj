@@ -1,18 +1,22 @@
 {% extends "products/base-template.html" %}
-{% load static %}
+
 {% block content %}
-    <div class="product-details col span-1-of-2">
-        <div class="product-img">
-            <img src="{{object.image.url}}" alt="">
+    <article class="media content-section">
+        <div style="margin-right: 20px;">
+            <img style="width: 400px; height: auto;" src="{{ object.image.url }}" alt="Product Image">
         </div>
-    </div>
-    <div class="product-details2 col span-1-of-2">
-        <div class="product-details">
-            <p>{{ object.title }}</p>
-            <p>${{object.price}}</p>
-            <p>{{object.stock}}</p>
-            <p>{{object.manufacturer}}</p>
-            <p>{{object.description}}</p>
+        <div>
+            <h2>{{ object.title }}</h2>
+            <h3 style="color: blueviolet;">${{ object.price }}</h3>
+            <p> Remaining Stock:    {{ object.stock }}</p>
+            <p><strong>Description :</strong><br>{{ object.description }}</p>
+            <p><strong>Type :</strong>   {{ object.type}}</p>
+            <p><strong>Manufacturer :</strong>   {{ object.manufacturer}}</p>
+            <div>
+                <div>
+                    <a class="btn btn-success mt-1 mb-1" href="">Add to Cart</a>
+                </div>
+            </div>
         </div>
-    </div>
-{% endblock %}
+    </article>
+{% endblock content %}

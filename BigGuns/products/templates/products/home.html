@@ -1,23 +1,31 @@
 {% extends "products/base-template.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block content %}
-<form method="get">
-  {{ filter.form}}
-  <button type="submit">Search</button>
-</form>
-  {% for product in filter.qs %}
-    <a href="{% url 'product-details' product.id %}" class="product-a">
-      <div class="product col span-1-of-5">
-        <div class="product-img">
-          <img src="{{product.image.url}}" alt="">
-        </div>
-        <div class="product-details">
-          <p>{{ product.title }}</p>
-          <p>${{product.price}}</p>
-          <a href="add/{{ product.id }}">Add to Cart</a>
-                    <a href="remove/{{ product.id }}">Remove from Cart</a>
-        </div>
+<div class="col-md-9 mb-4">
+  <form method="get">
+     {{ filter.form| crispy }}
+     <button type="submit" class="btn btn-outline-secondary">Search</button>
+  </form>
+</div>
+<div>
+  <div class="row">
+    {% for product in filter.qs %}
+    <div style="display: inline-block; margin: 1; width: 250px; height: 400px; float: left;" class="ml-4"> 
+      <a href="{% url 'product-details' product.id %}" style="text-decoration: none;">
+          <div class="card-body" style='width:100%; height:200px;'>
+              <img src="{{product.image.url}}" style="width:100%; height: auto; margin: auto 0;" class="card-img-top" alt="{{ product.title }}">
+          </div>
+          <div class="card-body text-center">
+              <h5 class="card-title"> {{ product.title }}</h5>
+              <p class="card-text" style="color: blueviolet;">${{ product.price }}</p>
+          </div>
+          <div class='card-footer text-center'>
+              <a href="add/{{ product.id }}" class="btn btn-success">Add to Cart</a>
+          </div>
+        </a>
       </div>
-    </a>
-  {% endfor %}
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}
